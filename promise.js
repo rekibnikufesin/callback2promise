@@ -1,20 +1,28 @@
 'use strict';
 
 let wait = (delay) => {
-    console.log('waiting...');
-    return new Promise(
-        (resolve) => {
+    return new Promise((resolve, reject) => {
+        if(isNaN(delay)){
+            reject('Not a number');
+        } else {
+            console.log('waiting...');
             setTimeout(() => {
-                console.log('done waiting');
-                resolve();
+                resolve('done waiting');
             }, delay);
         }
-    );
+    });
 };
 
 let start = () => {
     console.log('Calling wait function');
-    wait(1000).then(end);
+    wait(1000)
+        .then((resp) => {
+            console.log(resp);
+            end();
+        })
+        .catch((err) => {
+          console.log(err);  
+        });
 };
 
 let end = () => {
