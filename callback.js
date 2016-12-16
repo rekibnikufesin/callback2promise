@@ -1,11 +1,14 @@
 'use strict';
 
 let wait = (delay, cb) => {
-    console.log('waiting...');
-    setTimeout(() => {
-        console.log('done waiting');
-        cb();
-    }, delay);
+    if (isNaN(delay)) {
+        cb('Not a number');
+    } else {
+        console.log('waiting...');
+        setTimeout(() => {
+            cb(null, 'done waiting');
+        }, delay);
+    }
 };
 
 let start = () => {
@@ -13,8 +16,13 @@ let start = () => {
     wait(1000, end);
 };
 
-let end = () => {
-    console.log('Finished waiting');
+let end = (err, resp) => {
+    if(err) {
+        console.log(err);
+    } else {
+        console.log(resp);
+        console.log('Finished waiting');
+    }
 };
 
 start();
